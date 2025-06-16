@@ -20,8 +20,9 @@
 
             body {
                 font-family: "Mori", sans-serif;
-                background-color: #f8f9fa;
+                background-color: #f8f9fa; /* Initial background */
                 overflow-x: hidden;
+                transition: background-color 1s ease; /* Smooth background color transition */
             }
 
             .header-section {
@@ -101,7 +102,7 @@
                 object-fit: cover;
                 border-radius: 8px;
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-                transition: all 0.5s ease;
+                transition: all 0.5s ease; /* Keep this for hover effect */
             }
 
             .timeline-image:hover {
@@ -163,6 +164,13 @@
                 z-index: 10; /* Ensure it appears above the line */
             }
 
+            /* Style for both elements to ensure alignment */
+            .verticalLine,
+            .activeMarker,
+            .timepoint {
+                cx: 120; /* Ensure all elements have the same center x-coordinate */
+            }
+
             .text01,
             .text02,
             .text03,
@@ -199,20 +207,6 @@
                     r: 8;
                 }
             }
-
-            /* Ensure active marker aligns with vertical line */
-            .activeMarker {
-                filter: drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.3));
-                transition: all 0.5s ease;
-                z-index: 10; /* Ensure it appears above the line */
-            }
-
-            /* Style for both elements to ensure alignment */
-            .verticalLine,
-            .activeMarker,
-            .timepoint {
-                cx: 120; /* Ensure all elements have the same center x-coordinate */
-            }
         </style>
     </head>
     <body>
@@ -224,14 +218,12 @@
             <p class="text-center mb-5">Từ Khởi nghiệp đến Đối tác Toàn diện</p>
         </div>
 
-        <!-- SVG Timeline Animation Container -->
         <div id="svg-container">
             <svg
                 id="svg-stage"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 1920 1080"
             >
-                <!-- Vertical timeline line -->
                 <path
                     class="verticalLine"
                     d="M 120 100 L 120 800"
@@ -241,7 +233,6 @@
                     stroke-linecap="round"
                 ></path>
 
-                <!-- Year points and labels -->
                 <circle
                     class="timepoint"
                     cx="120"
@@ -321,10 +312,8 @@
             </svg>
         </div>
 
-        <!-- Timeline Content Section -->
         <div class="timeline-wrapper">
             <div class="container">
-                <!-- 2018 -->
                 <div class="timeline-item" data-year="2018">
                     <div class="row align-items-center">
                         <div class="col-md-5">
@@ -355,7 +344,6 @@
                     </div>
                 </div>
 
-                <!-- 2019 -->
                 <div class="timeline-item" data-year="2019">
                     <div class="row align-items-center">
                         <div class="col-md-5 order-md-2">
@@ -384,7 +372,6 @@
                     </div>
                 </div>
 
-                <!-- 2020 -->
                 <div class="timeline-item" data-year="2020">
                     <div class="row align-items-center">
                         <div class="col-md-5">
@@ -414,7 +401,6 @@
                     </div>
                 </div>
 
-                <!-- 2021 -->
                 <div class="timeline-item" data-year="2021">
                     <div class="row align-items-center">
                         <div class="col-md-5 order-md-2">
@@ -444,7 +430,6 @@
                     </div>
                 </div>
 
-                <!-- 2022 -->
                 <div class="timeline-item" data-year="2022">
                     <div class="row align-items-center">
                         <div class="col-md-5">
@@ -474,7 +459,6 @@
                     </div>
                 </div>
 
-                <!-- 2023 -->
                 <div class="timeline-item" data-year="2023">
                     <div class="row align-items-center">
                         <div class="col-md-5 order-md-2">
@@ -505,7 +489,6 @@
                     </div>
                 </div>
 
-                <!-- 2025 -->
                 <div class="timeline-item" data-year="2025">
                     <div class="row align-items-center">
                         <div class="col-md-4">
@@ -538,7 +521,6 @@
             </div>
         </div>
 
-        <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
@@ -597,23 +579,37 @@
                         0
                     );
 
-                // Animate each timeline item when it comes into view
                 const timelineItems =
                     document.querySelectorAll(".timeline-item");
 
                 timelineItems.forEach((item, index) => {
                     const year = item.getAttribute("data-year");
+                    const content = item.querySelector(".timeline-content");
+                    const image = item.querySelector(".timeline-image");
+
+                    // Initial state for content and image
+                    gsap.set([content, image], { opacity: 0, y: 50 });
 
                     ScrollTrigger.create({
                         trigger: item,
                         start: "top 70%",
+                        end: "bottom 30%", // Adjust end to control when the animation reverses
                         onEnter: () => {
-                            gsap.to(item, {
+                            gsap.to(content, {
                                 opacity: 1,
                                 y: 0,
-                                duration: 0.5,
-                                ease: "power2.out",
-                            }); // Highlight the current year in the SVG
+                                duration: 0.8,
+                                ease: "power3.out", // More dynamic ease
+                            });
+                            gsap.to(image, {
+                                opacity: 1,
+                                y: 0,
+                                duration: 0.8,
+                                delay: 0.2, // Stagger image animation slightly
+                                ease: "power3.out",
+                            });
+
+                            // Highlight the current year in the SVG
                             gsap.to(`.text0${index + 1}`, {
                                 fontWeight: "bold",
                                 fill: "#0d6efd",
@@ -628,15 +624,25 @@
                                 fill: "#ff5252",
                                 r: 14,
                                 duration: 0.3,
-                            }); // Move the active marker to current position
+                            });
+
+                            // Move the active marker to current position
                             gsap.to(".activeMarker", {
                                 cy: 150 + index * 100,
-                                cx: 120, // Ensure x position is fixed
+                                cx: 120,
                                 duration: 0.5,
                                 ease: "power2.out",
                             });
                         },
                         onLeaveBack: () => {
+                            // Animate content and image out when scrolling back up
+                            gsap.to([content, image], {
+                                opacity: 0,
+                                y: 50,
+                                duration: 0.5,
+                                ease: "power2.in",
+                            });
+
                             // Unhighlight when scrolling back up
                             gsap.to(`.text0${index + 1}`, {
                                 fontWeight: "normal",
@@ -653,10 +659,74 @@
                                 duration: 0.3,
                             });
                         },
-                    });
+                        // For smoother continuous animation on scroll
+                        onLeave: () => {
+                            // Animate content and image out when scrolling down past the item
+                            gsap.to([content, image], {
+                                opacity: 0,
+                                y: -50, // Move upwards when leaving downwards
+                                duration: 0.5,
+                                ease: "power2.in",
+                            });
 
-                    // Initial state for the animation
-                    gsap.set(item, { opacity: 0.5, y: 30 });
+                            // Unhighlight when leaving downwards
+                            gsap.to(`.text0${index + 1}`, {
+                                fontWeight: "normal",
+                                fill: "#333",
+                                scale: 1,
+                                opacity: 0.7,
+                                duration: 0.3,
+                            });
+
+                            // Restore the timepoint
+                            gsap.to(`.timepoint:nth-child(${index * 2 + 2})`, {
+                                fill: "#0d6efd",
+                                r: 12,
+                                duration: 0.3,
+                            });
+                        },
+                        onEnterBack: () => {
+                            // Animate content and image back in when scrolling back into view from below
+                            gsap.to(content, {
+                                opacity: 1,
+                                y: 0,
+                                duration: 0.8,
+                                ease: "power3.out",
+                            });
+                            gsap.to(image, {
+                                opacity: 1,
+                                y: 0,
+                                duration: 0.8,
+                                delay: 0.2,
+                                ease: "power3.out",
+                            });
+
+                            // Highlight the current year in the SVG
+                            gsap.to(`.text0${index + 1}`, {
+                                fontWeight: "bold",
+                                fill: "#0d6efd",
+                                scale: 1.2,
+                                opacity: 1,
+                                transformOrigin: "left center",
+                                duration: 0.3,
+                            });
+
+                            // Highlight the current timepoint
+                            gsap.to(`.timepoint:nth-child(${index * 2 + 2})`, {
+                                fill: "#ff5252",
+                                r: 14,
+                                duration: 0.3,
+                            });
+
+                            // Move the active marker to current position
+                            gsap.to(".activeMarker", {
+                                cy: 150 + index * 100,
+                                cx: 120,
+                                duration: 0.5,
+                                ease: "power2.out",
+                            });
+                        },
+                    });
                 });
 
                 // Add special handling for the 2025 section
@@ -678,14 +748,47 @@
                             r: 16,
                             fill: "#ff5252",
                             duration: 0.5,
-                        }); // Ensure active marker reaches the end
+                        });
+
+                        // Ensure active marker reaches the end
                         gsap.to(".activeMarker", {
                             cy: 750,
-                            cx: 120, // Keep aligned with the vertical line
+                            cx: 120,
                             scale: 1.2,
                             duration: 0.8,
                             ease: "power2.inOut",
                         });
+                    },
+                });
+
+                // Optional: Animate background color based on scroll
+                gsap.to("body", {
+                    backgroundColor: "#e0e7ee", // A slightly darker/different color
+                    scrollTrigger: {
+                        trigger: ".timeline-item[data-year='2019']",
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: true,
+                    },
+                });
+
+                gsap.to("body", {
+                    backgroundColor: "#d1dbe5", // Another color
+                    scrollTrigger: {
+                        trigger: ".timeline-item[data-year='2021']",
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: true,
+                    },
+                });
+
+                gsap.to("body", {
+                    backgroundColor: "#c2d0dd", // Yet another color
+                    scrollTrigger: {
+                        trigger: ".timeline-item[data-year='2023']",
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: true,
                     },
                 });
             });
