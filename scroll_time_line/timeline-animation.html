@@ -144,6 +144,60 @@
                     margin-top: 20px;
                 }
             }
+
+            /* Vertical timeline styles */
+            .verticalLine {
+                stroke-dasharray: none;
+                opacity: 0.8;
+                filter: drop-shadow(0px 0px 5px rgba(13, 110, 253, 0.3));
+            }
+
+            .timepoint {
+                filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2));
+                transition: all 0.3s ease;
+            }
+
+            .activeMarker {
+                filter: drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.3));
+                transition: all 0.5s ease;
+            }
+
+            .text01,
+            .text02,
+            .text03,
+            .text04,
+            .text05,
+            .text06,
+            .text07 {
+                font-size: 18px;
+                font-weight: 500;
+                fill: #333;
+                text-anchor: start;
+                visibility: visible;
+                opacity: 0.7;
+                transition: all 0.3s ease;
+            }
+
+            /* Timeline item positioning relative to vertical timeline */
+            .timeline-item {
+                padding-left: 180px;
+                position: relative;
+            }
+
+            /* Responsive adjustments for vertical timeline */
+            @media (max-width: 768px) {
+                .timeline-item {
+                    padding-left: 100px;
+                }
+
+                .verticalLine {
+                    stroke-width: 4px;
+                }
+
+                .timepoint {
+                    r: 8;
+                }
+            }
         </style>
     </head>
     <body>
@@ -162,41 +216,92 @@
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 1920 1080"
             >
-                <!-- Horizontal guide lines -->
-                <path class="line line01" d="M 200 180 1720 180"></path>
-                <path class="line line02" d="M 200 300 1720 300"></path>
-                <path class="line line03" d="M 200 420 1720 420"></path>
-                <path class="line line04" d="M 200 540 1720 540"></path>
-                <path class="line line05" d="M 200 660 1720 660"></path>
-                <path class="line line06" d="M 200 780 1720 780"></path>
-                <path class="line line07" d="M 200 900 1720 900"></path>
-
-                <!-- Year labels -->
-                <text class="text01" x="120" y="180">2018</text>
-                <text class="text02" x="120" y="300">2019</text>
-                <text class="text03" x="120" y="420">2020</text>
-                <text class="text04" x="120" y="540">2021</text>
-                <text class="text05" x="120" y="660">2022</text>
-                <text class="text06" x="120" y="780">2023</text>
-                <text class="text07" x="120" y="900">2025</text>
-
-                <!-- The main curved path for the ball to follow -->
+                <!-- Vertical timeline line -->
                 <path
-                    class="theLine"
-                    d="M 200,180
-                    C 600,180 700,300 900,300
-                    S 1200,420 1300,420
-                    S 1500,540 1600,540
-                    S 1300,660 1400,660
-                    S 1600,780 1500,780
-                    S 1400,900 1720,900"
+                    class="verticalLine"
+                    d="M 120 100 L 120 800"
                     fill="none"
                     stroke="#0d6efd"
-                    stroke-width="4px"
+                    stroke-width="6px"
                 ></path>
 
-                <!-- The ball that follows the path -->
-                <circle class="ball ball01" cx="200" cy="180" r="15"></circle>
+                <!-- Year points and labels -->
+                <circle
+                    class="timepoint"
+                    cx="120"
+                    cy="150"
+                    r="12"
+                    fill="#0d6efd"
+                ></circle>
+                <text class="text01" x="150" y="155" font-weight="bold">
+                    2018
+                </text>
+
+                <circle
+                    class="timepoint"
+                    cx="120"
+                    cy="250"
+                    r="12"
+                    fill="#0d6efd"
+                ></circle>
+                <text class="text02" x="150" y="255" font-weight="bold">
+                    2019
+                </text>
+
+                <circle
+                    class="timepoint"
+                    cx="120"
+                    cy="350"
+                    r="12"
+                    fill="#0d6efd"
+                ></circle>
+                <text class="text03" x="150" y="355" font-weight="bold">
+                    2020
+                </text>
+
+                <circle
+                    class="timepoint"
+                    cx="120"
+                    cy="450"
+                    r="12"
+                    fill="#0d6efd"
+                ></circle>
+                <text class="text04" x="150" y="455" font-weight="bold">
+                    2021
+                </text>
+
+                <circle
+                    class="timepoint"
+                    cx="120"
+                    cy="550"
+                    r="12"
+                    fill="#0d6efd"
+                ></circle>
+                <text class="text05" x="150" y="555" font-weight="bold">
+                    2022
+                </text>
+
+                <circle
+                    class="timepoint"
+                    cx="120"
+                    cy="650"
+                    r="12"
+                    fill="#0d6efd"
+                ></circle>
+                <text class="text06" x="150" y="655" font-weight="bold">
+                    2023
+                </text>
+
+                <circle
+                    class="timepoint"
+                    cx="120"
+                    cy="750"
+                    r="12"
+                    fill="#0d6efd"
+                ></circle>
+                <text class="text07" x="150" y="755" font-weight="bold">
+                    2025
+                </text>
             </svg>
         </div>
 
@@ -462,20 +567,15 @@
                         pinSpacing: false,
                     },
                 });
-
                 mainTimeline
-                    .to(".ball01", { autoAlpha: 1, duration: 0.1 }, 0)
-                    .from(".theLine", { drawSVG: 0, duration: 1 }, 0)
+                    .to(".activeMarker", { autoAlpha: 1, duration: 0.1 }, 0)
+                    .from(".verticalLine", { drawSVG: "0%", duration: 0.5 }, 0)
                     .to(
-                        ".ball01",
+                        ".activeMarker",
                         {
-                            motionPath: {
-                                path: ".theLine",
-                                align: ".theLine",
-                                alignOrigin: [0.5, 0.5],
-                                autoRotate: true,
-                            },
+                            y: 600, // Move from first (2018) to last point (2025) - new coordinate range
                             duration: 1,
+                            ease: "none",
                         },
                         0
                     );
@@ -496,15 +596,26 @@
                                 y: 0,
                                 duration: 0.5,
                                 ease: "power2.out",
-                            });
-
-                            // Highlight the current year in the SVG
+                            }); // Highlight the current year in the SVG
                             gsap.to(`.text0${index + 1}`, {
                                 fontWeight: "bold",
                                 fill: "#0d6efd",
                                 scale: 1.2,
+                                opacity: 1,
                                 transformOrigin: "left center",
                                 duration: 0.3,
+                            });
+
+                            // Highlight the current timepoint
+                            gsap.to(`.timepoint:nth-child(${index * 2 + 2})`, {
+                                fill: "#ff5252",
+                                r: 14,
+                                duration: 0.3,
+                            }); // Move the active marker to current position
+                            gsap.to(".activeMarker", {
+                                cy: 150 + index * 100,
+                                duration: 0.5,
+                                ease: "power2.out",
                             });
                         },
                         onLeaveBack: () => {
@@ -513,6 +624,14 @@
                                 fontWeight: "normal",
                                 fill: "#333",
                                 scale: 1,
+                                opacity: 0.7,
+                                duration: 0.3,
+                            });
+
+                            // Restore the timepoint
+                            gsap.to(`.timepoint:nth-child(${index * 2 + 2})`, {
+                                fill: "#0d6efd",
+                                r: 12,
                                 duration: 0.3,
                             });
                         },
@@ -520,6 +639,35 @@
 
                     // Initial state for the animation
                     gsap.set(item, { opacity: 0.5, y: 30 });
+                });
+
+                // Add special handling for the 2025 section
+                ScrollTrigger.create({
+                    trigger: ".timeline-item[data-year='2025']",
+                    start: "top 70%",
+                    onEnter: () => {
+                        // Make the 2025 marker more prominent
+                        gsap.to(".text07", {
+                            fontWeight: "bold",
+                            fill: "#ff5252",
+                            scale: 1.3,
+                            opacity: 1,
+                            duration: 0.5,
+                        });
+
+                        // Make the final point more prominent
+                        gsap.to(".timepoint:last-of-type", {
+                            r: 16,
+                            fill: "#ff5252",
+                            duration: 0.5,
+                        }); // Ensure active marker reaches the end
+                        gsap.to(".activeMarker", {
+                            cy: 750,
+                            scale: 1.2,
+                            duration: 0.8,
+                            ease: "power2.inOut",
+                        });
+                    },
                 });
             });
         </script>
