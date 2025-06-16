@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>VietProteam Timeline</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <style>
+            @font-face {
+                font-display: block;
+                font-family: Mori;
+                font-style: normal;
+                font-weight: 400;
+                src: url(https://assets.codepen.io/16327/PPMori-Regular.woff)
+                    format("woff");
+            }
+
+            body {
+                font-family: "Mori", sans-serif;
+                background-color: #f8f9fa;
+                overflow-x: hidden;
+            }
+
+            .header-section {
+                position: relative;
+                text-align: center;
+                margin: 50px auto 30px;
+                color: #333;
+                font-size: 2.5rem;
+                font-weight: 700;
+            }
+
+            .section-divider {
+                width: 80px;
+                height: 4px;
+                background-color: #0d6efd;
+                margin: 20px auto;
+            }
+
+            #svg-container {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100vh;
+                pointer-events: none;
+                z-index: 10;
+            }
+
+            #svg-stage {
+                width: 100%;
+                height: 100%;
+                overflow: visible;
+            }
+
+            .timeline-wrapper {
+                position: relative;
+                padding-top: 50vh;
+                padding-bottom: 50vh;
+            }
+
+            .timeline-item {
+                min-height: 70vh;
+                padding: 100px 0;
+                position: relative;
+            }
+
+            .timeline-content {
+                transition: all 0.5s ease;
+                box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+                overflow: hidden;
+                background-color: white;
+            }
+
+            .timeline-content:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            }
+
+            .year {
+                font-size: 1rem;
+                font-weight: bold;
+                padding: 8px 15px;
+                display: inline-block;
+                background-color: #0d6efd;
+                color: white;
+                border-radius: 30px;
+            }
+
+            .timeline-image {
+                height: 300px;
+                width: 100%;
+                object-fit: cover;
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .ball {
+                fill: #0d6efd;
+                visibility: hidden;
+                r: 15;
+            }
+
+            .line {
+                fill: none;
+                stroke: rgba(13, 110, 253, 0.3);
+                stroke-width: 2px;
+                stroke-dasharray: 5;
+            }
+
+            .theLine {
+                stroke: #0d6efd;
+                stroke-width: 4px;
+            }
+
+            text {
+                fill: #333;
+                font-size: 18px;
+                font-weight: bold;
+                visibility: hidden;
+            }
+
+            @media (max-width: 768px) {
+                .timeline-item {
+                    min-height: auto;
+                    padding: 50px 0;
+                }
+
+                .timeline-image {
+                    height: 200px;
+                    margin-top: 20px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="header-section">
+                Hành trình Phát triển của VietProteam
+            </h1>
+            <div class="section-divider"></div>
+            <p class="text-center mb-5">Từ Khởi nghiệp đến Đối tác Toàn diện</p>
+        </div>
+
+        <!-- SVG Timeline Animation Container -->
+        <div id="svg-container">
+            <svg
+                id="svg-stage"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 1920 1080"
+            >
+                <!-- Horizontal guide lines -->
+                <path class="line line01" d="M 200 180 1720 180"></path>
+                <path class="line line02" d="M 200 300 1720 300"></path>
+                <path class="line line03" d="M 200 420 1720 420"></path>
+                <path class="line line04" d="M 200 540 1720 540"></path>
+                <path class="line line05" d="M 200 660 1720 660"></path>
+                <path class="line line06" d="M 200 780 1720 780"></path>
+                <path class="line line07" d="M 200 900 1720 900"></path>
+
+                <!-- Year labels -->
+                <text class="text01" x="120" y="180">2018</text>
+                <text class="text02" x="120" y="300">2019</text>
+                <text class="text03" x="120" y="420">2020</text>
+                <text class="text04" x="120" y="540">2021</text>
+                <text class="text05" x="120" y="660">2022</text>
+                <text class="text06" x="120" y="780">2023</text>
+                <text class="text07" x="120" y="900">2025</text>
+
+                <!-- The main curved path for the ball to follow -->
+                <path
+                    class="theLine"
+                    d="M 200,180
+                    C 600,180 700,300 900,300
+                    S 1200,420 1300,420
+                    S 1500,540 1600,540
+                    S 1300,660 1400,660
+                    S 1600,780 1500,780
+                    S 1400,900 1720,900"
+                    fill="none"
+                    stroke="#0d6efd"
+                    stroke-width="4px"
+                ></path>
+
+                <!-- The ball that follows the path -->
+                <circle class="ball ball01" cx="200" cy="180" r="15"></circle>
+            </svg>
+        </div>
+
+        <!-- Timeline Content Section -->
+        <div class="timeline-wrapper">
+            <div class="container">
+                <!-- 2018 -->
+                <div class="timeline-item" data-year="2018">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="timeline-content p-4">
+                                <div class="year mb-3">2018</div>
+                                <h3 class="h4 mb-3">
+                                    Khởi nghiệp & Đặt nền móng vững chắc
+                                </h3>
+                                <p class="text-muted">
+                                    VietProteam ra đời, đặt nền móng vững chắc
+                                    với đội ngũ chuyên gia lập trình và
+                                    marketing giàu kinh nghiệm. Chúng tôi đã
+                                    nhanh chóng khẳng định năng lực qua việc
+                                    triển khai thành công hàng trăm dự án đa
+                                    dạng cho các doanh nghiệp vừa và nhỏ.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <img
+                                src="images/khoi_nghiep.jpeg"
+                                alt="2018 - Khởi nghiệp"
+                                class="timeline-image"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2019 -->
+                <div class="timeline-item" data-year="2019">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 order-md-2">
+                            <div class="timeline-content p-4">
+                                <div class="year mb-3">2019</div>
+                                <h3 class="h4 mb-3">
+                                    Mở rộng dịch vụ & Nâng cao chuyên môn
+                                </h3>
+                                <p class="text-muted">
+                                    Mở rộng các gói dịch vụ và nâng cao năng lực
+                                    chuyên môn. Bắt đầu cung cấp các giải pháp
+                                    phức tạp như phần mềm quản lý tùy chỉnh và
+                                    các chiến dịch marketing tích hợp.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 order-md-1">
+                            <img
+                                src="images/mo_rong_dich_vu.webp"
+                                alt="2019 - Mở rộng dịch vụ"
+                                class="timeline-image"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2020 -->
+                <div class="timeline-item" data-year="2020">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="timeline-content p-4">
+                                <div class="year mb-3">2020</div>
+                                <h3 class="h4 mb-3">
+                                    Thích ứng & Vượt qua thách thức
+                                </h3>
+                                <p class="text-muted">
+                                    Chứng tỏ khả năng thích ứng nhanh chóng và
+                                    linh hoạt. Tập trung vào việc tối ưu hóa quy
+                                    trình làm việc từ xa và đẩy mạnh các giải
+                                    pháp công nghệ giúp doanh nghiệp chuyển đổi
+                                    số.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <img
+                                src="images/vuot_qua_thu_thach.webp"
+                                alt="2020 - Vượt qua thách thức"
+                                class="timeline-image"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2021 -->
+                <div class="timeline-item" data-year="2021">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 order-md-2">
+                            <div class="timeline-content p-4">
+                                <div class="year mb-3">2021</div>
+                                <h3 class="h4 mb-3">
+                                    Nâng cao chất lượng & Chuẩn bị cho kỷ nguyên
+                                    số mới
+                                </h3>
+                                <p class="text-muted">
+                                    Tập trung nâng cao chất lượng dịch vụ và sản
+                                    phẩm. Đầu tư mạnh vào nghiên cứu và ứng dụng
+                                    các công nghệ mới nổi như Big Data và tối ưu
+                                    hóa UX/UI.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 order-md-1">
+                            <img
+                                src="images/nang_cao_chat_luong.jpeg"
+                                alt="2021 - Nâng cao chất lượng"
+                                class="timeline-image"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2022 -->
+                <div class="timeline-item" data-year="2022">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="timeline-content p-4">
+                                <div class="year mb-3">2022</div>
+                                <h3 class="h4 mb-3">
+                                    Bước đột phá chiến lược với VietProteam
+                                    Agency
+                                </h3>
+                                <p class="text-muted">
+                                    Ra mắt VietProteam Agency chuyên biệt hóa
+                                    vào các dịch vụ Digital Marketing toàn diện,
+                                    với đội ngũ chuyên gia sáng tạo và chiến
+                                    lược gia tài năng.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <img
+                                src="images/vietproteam.webp"
+                                alt="2022 - VietProteam Agency"
+                                class="timeline-image"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2023 -->
+                <div class="timeline-item" data-year="2023">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 order-md-2">
+                            <div class="timeline-content p-4">
+                                <div class="year mb-3">2023</div>
+                                <h3 class="h4 mb-3">
+                                    Tiên phong ứng dụng công nghệ với
+                                    VietProteam AIoT
+                                </h3>
+                                <p class="text-muted">
+                                    Thành lập VietProteam AIoT, tiên phong trong
+                                    nghiên cứu và ứng dụng Trí tuệ Nhân tạo (AI)
+                                    và Internet of Things (IoT). Phát triển các
+                                    giải pháp thông minh giúp doanh nghiệp tự
+                                    động hóa và tối ưu hóa.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 order-md-1">
+                            <img
+                                src="images/ai_iot.webp"
+                                alt="2023 - VietProteam AIoT"
+                                class="timeline-image"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2025 -->
+                <div class="timeline-item" data-year="2025">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="timeline-content p-4">
+                                <div class="year mb-3">2025</div>
+                                <h3 class="h4 mb-3">
+                                    Mở rộng quy mô & Định vị thương hiệu với CSA
+                                    Vietnam
+                                </h3>
+                                <p class="text-muted">
+                                    VietProteam chính thức trở thành CSA
+                                    Vietnam, tích hợp và nâng tầm các giải pháp
+                                    marketing số, công nghệ, và dịch vụ tư vấn
+                                    nhân sự, hướng tới trở thành đối tác chiến
+                                    lược toàn diện.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <img
+                                src="images/csa_agency.jpg"
+                                alt="2025 - CSA Vietnam"
+                                class="timeline-image"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollToPlugin.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/DrawSVGPlugin.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/MotionPathPlugin.min.js"></script>
+
+        <script>
+            // Register GSAP plugins
+            gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin, MotionPathPlugin);
+            gsap.defaults({ ease: "none" });
+
+            // Wait for DOM to be fully loaded
+            document.addEventListener("DOMContentLoaded", function () {
+                // Show years and animate text
+                const textTimeline = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: ".timeline-wrapper",
+                        start: "top 80%",
+                        end: "bottom 80%",
+                        scrub: true,
+                    },
+                });
+
+                textTimeline
+                    .to(".text01", { autoAlpha: 1, duration: 0.1 }, 0)
+                    .to(".text02", { autoAlpha: 1, duration: 0.1 }, 0.1)
+                    .to(".text03", { autoAlpha: 1, duration: 0.1 }, 0.2)
+                    .to(".text04", { autoAlpha: 1, duration: 0.1 }, 0.3)
+                    .to(".text05", { autoAlpha: 1, duration: 0.1 }, 0.4)
+                    .to(".text06", { autoAlpha: 1, duration: 0.1 }, 0.5)
+                    .to(".text07", { autoAlpha: 1, duration: 0.1 }, 0.6);
+
+                // Animate the line drawing and ball following
+                const mainTimeline = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: ".timeline-wrapper",
+                        start: "top center",
+                        end: "bottom center",
+                        scrub: true,
+                        pin: "#svg-container",
+                        pinSpacing: false,
+                    },
+                });
+
+                mainTimeline
+                    .to(".ball01", { autoAlpha: 1, duration: 0.1 }, 0)
+                    .from(".theLine", { drawSVG: 0, duration: 1 }, 0)
+                    .to(
+                        ".ball01",
+                        {
+                            motionPath: {
+                                path: ".theLine",
+                                align: ".theLine",
+                                alignOrigin: [0.5, 0.5],
+                                autoRotate: true,
+                            },
+                            duration: 1,
+                        },
+                        0
+                    );
+
+                // Animate each timeline item when it comes into view
+                const timelineItems =
+                    document.querySelectorAll(".timeline-item");
+
+                timelineItems.forEach((item, index) => {
+                    const year = item.getAttribute("data-year");
+
+                    ScrollTrigger.create({
+                        trigger: item,
+                        start: "top 70%",
+                        onEnter: () => {
+                            gsap.to(item, {
+                                opacity: 1,
+                                y: 0,
+                                duration: 0.5,
+                                ease: "power2.out",
+                            });
+
+                            // Highlight the current year in the SVG
+                            gsap.to(`.text0${index + 1}`, {
+                                fontWeight: "bold",
+                                fill: "#0d6efd",
+                                scale: 1.2,
+                                transformOrigin: "left center",
+                                duration: 0.3,
+                            });
+                        },
+                        onLeaveBack: () => {
+                            // Unhighlight when scrolling back up
+                            gsap.to(`.text0${index + 1}`, {
+                                fontWeight: "normal",
+                                fill: "#333",
+                                scale: 1,
+                                duration: 0.3,
+                            });
+                        },
+                    });
+
+                    // Initial state for the animation
+                    gsap.set(item, { opacity: 0.5, y: 30 });
+                });
+            });
+        </script>
+    </body>
+</html>
