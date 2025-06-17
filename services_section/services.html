@@ -3,10 +3,295 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>CSA Vietnam - Dịch Vụ</title>
+        <!-- Bootstrap CSS -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <!-- GSAP Animation Libraries -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+        <!-- SplitType for text animations -->
+        <script src="https://unpkg.com/split-type"></script>
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <!-- Font Awesome -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+
+        <!-- Inline CSS -->
+        <style>
+            /* Services Section Styling */
+            :root {
+                --primary-color: #0066ff;
+                --secondary-color: #0044cc;
+                --accent-color: #ff6600;
+                --text-color: #333333;
+                --light-bg: #f8f9fa;
+                --dark-bg: #212529;
+                --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+                --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+                --hover-transform: translateY(-5px);
+            }
+
+            body {
+                font-family: "Montserrat", sans-serif;
+                overflow-x: hidden;
+                color: var(--text-color);
+            }
+
+            /* Section Styles */
+            .services-section {
+                position: relative;
+                padding: 100px 0;
+                background-color: var(--light-bg);
+                overflow: hidden;
+            }
+
+            /* Section Header */
+            .section-title {
+                font-weight: 700;
+                color: var(--dark-bg);
+                margin-bottom: 1.5rem;
+                position: relative;
+            }
+
+            .section-divider {
+                height: 4px;
+                width: 60px;
+                background: var(--primary-color);
+                position: relative;
+            }
+
+            .section-divider::before {
+                content: "";
+                position: absolute;
+                left: -20px;
+                top: 0;
+                width: 12px;
+                height: 4px;
+                background: var(--accent-color);
+                border-radius: 2px;
+            }
+
+            .section-divider::after {
+                content: "";
+                position: absolute;
+                right: -20px;
+                top: 0;
+                width: 12px;
+                height: 4px;
+                background: var(--accent-color);
+                border-radius: 2px;
+            } /* Row Styles for Equal Height */
+            .equal-height-row {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .equal-height-row > [class*="col-"] {
+                display: flex;
+                flex-direction: column;
+            }
+
+            /* Card Styles */
+            .service-card {
+                border-radius: 15px;
+                transition: all 0.4s var(--transition-timing);
+                background: white;
+                overflow: hidden;
+                box-shadow: var(--card-shadow);
+                transform: translateY(30px);
+                /* Đảm bảo thẻ hiển thị trước khi animation */
+                opacity: 1;
+                height: 100%; /* Đảm bảo card có chiều cao đồng đều */
+                display: flex;
+                flex-direction: column;
+            }
+
+            .service-card:hover {
+                transform: var(--hover-transform);
+                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            }
+
+            .service-card .card-body {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+
+            .service-card .list-unstyled {
+                flex-grow: 1; /* Cho phép danh sách mở rộng để lấp đầy không gian */
+            }
+
+            .service-icon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 80px;
+                height: 80px;
+                background: linear-gradient(
+                    135deg,
+                    var(--primary-color),
+                    var(--secondary-color)
+                );
+                color: white;
+                transition: all 0.4s var(--transition-timing);
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+
+            .service-card:hover .service-icon {
+                transform: scale(1.1);
+            }
+
+            .card-title {
+                font-weight: 600;
+                color: var(--dark-bg);
+                margin-bottom: 1rem;
+                position: relative;
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            .btn-outline-primary {
+                color: var(--primary-color);
+                border-color: var(--primary-color);
+                transition: all 0.3s var(--transition-timing);
+                position: relative;
+                overflow: hidden;
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            .btn-outline-primary:hover {
+                background-color: var(--primary-color);
+                color: white;
+            }
+
+            .btn-outline-primary i {
+                transition: transform 0.3s var(--transition-timing);
+            }
+
+            .btn-outline-primary:hover i {
+                transform: translateX(5px);
+            }
+
+            /* List Styles */
+            .list-unstyled li {
+                transition: all 0.3s var(--transition-timing);
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            .list-unstyled li:hover {
+                transform: translateX(5px);
+            }
+
+            .text-primary {
+                color: var(--primary-color) !important;
+            }
+
+            /* Floating Background Elements */
+            .bg-shape {
+                position: absolute;
+                border-radius: 50%;
+                background: linear-gradient(
+                    45deg,
+                    rgba(0, 102, 255, 0.1),
+                    rgba(0, 68, 204, 0.05)
+                );
+                z-index: 0;
+            }
+
+            .shape-1 {
+                width: 300px;
+                height: 300px;
+                top: -80px;
+                left: -100px;
+            }
+
+            .shape-2 {
+                width: 200px;
+                height: 200px;
+                bottom: 50px;
+                right: -50px;
+            }
+
+            .shape-3 {
+                width: 150px;
+                height: 150px;
+                bottom: 30%;
+                left: 10%;
+            }
+
+            /* Media Queries */
+            @media (max-width: 992px) {
+                .service-card {
+                    margin-bottom: 30px;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .section-title {
+                    font-size: 2rem;
+                }
+
+                .services-section {
+                    padding: 60px 0;
+                }
+            }
+
+            /* Animation States */
+            .fade-up {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: opacity 0.6s ease, transform 0.6s ease;
+            }
+
+            .fade-up.is-visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* Animation for staggered entrance */
+            .stagger-item {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            /* Animation for continuous floating */
+            @keyframes float {
+                0% {
+                    transform: translateY(0px);
+                }
+                50% {
+                    transform: translateY(-10px);
+                }
+                100% {
+                    transform: translateY(0px);
+                }
+            }
+
+            .float-animation {
+                animation: float 5s ease-in-out infinite;
+            }
+        </style>
     </head>
     <body>
-        <section id="services" class="services-section py-5" data-section>
+        <section
+            id="services"
+            class="services-section py-5"
+            data-section="services"
+        >
             <div class="container">
                 <div class="row justify-content-center mb-5">
                     <div class="col-lg-6 text-center">
@@ -14,13 +299,16 @@
                             Dịch vụ nổi bật
                         </h2>
                         <div class="section-divider mx-auto mb-4"></div>
+                        <p class="lead mb-0 fade-up">
+                            Giải pháp toàn diện cho doanh nghiệp của bạn
+                        </p>
                     </div>
                 </div>
 
-                <div class="row g-4" data-grid>
+                <div class="row g-4 equal-height-row" data-grid>
                     <div class="col-md-6 col-lg-4" data-card>
                         <div class="card service-card h-100 border-0 shadow-sm">
-                            <div class="card-body p-4">
+                            <div class="card-body p-4 d-flex flex-column">
                                 <div
                                     class="service-icon rounded-circle mb-4"
                                     data-icon
@@ -30,7 +318,10 @@
                                 <h3 class="card-title h4 mb-4" data-title>
                                     Marketing Agency
                                 </h3>
-                                <ul class="list-unstyled mb-4" data-content>
+                                <ul
+                                    class="list-unstyled mb-4 flex-grow-1"
+                                    data-content
+                                >
                                     <li class="mb-2">
                                         <i
                                             class="fas fa-check-circle text-primary me-2"
@@ -64,7 +355,7 @@
                                 </ul>
                                 <a
                                     href="/services.php#marketing-services"
-                                    class="btn btn-outline-primary w-100"
+                                    class="btn btn-outline-primary w-100 mt-auto"
                                     data-hover="slide"
                                 >
                                     <span>Tìm hiểu thêm</span>
@@ -73,10 +364,9 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-md-6 col-lg-4" data-card>
                         <div class="card service-card h-100 border-0 shadow-sm">
-                            <div class="card-body p-4">
+                            <div class="card-body p-4 d-flex flex-column">
                                 <div
                                     class="service-icon rounded-circle mb-4"
                                     data-icon
@@ -86,7 +376,10 @@
                                 <h3 class="card-title h4 mb-4" data-title>
                                     IT Solutions
                                 </h3>
-                                <ul class="list-unstyled mb-4" data-content>
+                                <ul
+                                    class="list-unstyled mb-4 flex-grow-1"
+                                    data-content
+                                >
                                     <li class="mb-2">
                                         <i
                                             class="fas fa-check-circle text-primary me-2"
@@ -120,7 +413,7 @@
                                 </ul>
                                 <a
                                     href="/services.php#it-services"
-                                    class="btn btn-outline-primary w-100"
+                                    class="btn btn-outline-primary w-100 mt-auto"
                                     data-hover="slide"
                                 >
                                     <span>Tìm hiểu thêm</span>
@@ -182,5 +475,316 @@
                 </div>
             </div>
         </section>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Inline JavaScript -->
+        <script>
+            /**
+             * CSA Vietnam - Services Section Animations
+             * This script handles all animations for the services section
+             */
+
+            document.addEventListener("DOMContentLoaded", () => {
+                // Register GSAP plugins
+                gsap.registerPlugin(ScrollTrigger);
+
+                // Hiển thị tất cả nội dung trước khi áp dụng animation
+                showAllContent();
+
+                // Initialize animations sau khi đã hiển thị nội dung
+                setTimeout(() => {
+                    initServicesAnimations();
+                    initBackgroundShapes();
+                    initHoverEffects();
+                }, 100);
+            });
+
+            /**
+             * Hiển thị tất cả nội dung trước khi áp dụng animation
+             */
+            function showAllContent() {
+                // Hiển thị tất cả các card
+                document.querySelectorAll(".service-card").forEach((card) => {
+                    card.style.opacity = "1";
+                    card.style.transform = "translateY(0)";
+                });
+
+                // Hiển thị tất cả icon
+                document.querySelectorAll("[data-icon]").forEach((icon) => {
+                    icon.style.opacity = "1";
+                    icon.style.transform = "scale(1)";
+                });
+
+                // Hiển thị tất cả tiêu đề
+                document.querySelectorAll("[data-title]").forEach((title) => {
+                    title.style.opacity = "1";
+                    title.style.transform = "translateY(0)";
+                });
+
+                // Hiển thị tất cả nội dung
+                document.querySelectorAll("ul li").forEach((item) => {
+                    item.style.opacity = "1";
+                    item.style.transform = "translateX(0)";
+                });
+
+                // Hiển thị tất cả nút
+                document.querySelectorAll(".btn").forEach((btn) => {
+                    btn.style.opacity = "1";
+                    btn.style.transform = "translateY(0)";
+                });
+            }
+
+            /**
+             * Initialize services section animations
+             */
+            function initServicesAnimations() {
+                // Split section title text for character animation
+                const sectionTitle = new SplitType("[data-split]", {
+                    types: "chars",
+                });
+
+                // Create timeline for section title
+                const titleTl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: ".services-section",
+                        start: "top bottom-=100",
+                        toggleActions: "play none none none",
+                    },
+                });
+
+                // Animate section title characters
+                titleTl
+                    .from(sectionTitle.chars, {
+                        opacity: 0,
+                        y: 20,
+                        rotateX: -90,
+                        stagger: 0.03,
+                        duration: 0.6,
+                        ease: "back.out(1.7)",
+                    })
+                    .from(
+                        ".section-divider",
+                        {
+                            width: 0,
+                            opacity: 0,
+                            duration: 0.6,
+                            ease: "power3.out",
+                        },
+                        "-=0.3"
+                    )
+                    .from(
+                        ".section-divider::before, .section-divider::after",
+                        {
+                            width: 0,
+                            opacity: 0,
+                            duration: 0.4,
+                            ease: "power3.out",
+                        },
+                        "-=0.2"
+                    );
+
+                // Tạo animation nhẹ nhàng hơn cho service cards
+                // Sử dụng .from thay vì .to để bắt đầu từ điểm đã xác định và quay trở lại trạng thái hiện tại
+                ScrollTrigger.batch("[data-card]", {
+                    interval: 0.1,
+                    batchMax: 3,
+                    start: "top bottom-=50",
+                    onEnter: (batch) => {
+                        // Sử dụng hiệu ứng nhẹ nhàng từ dưới lên không ảnh hưởng đến hiển thị
+                        gsap.from(batch, {
+                            y: 30,
+                            stagger: 0.15,
+                            duration: 0.8,
+                            ease: "power3.out",
+                            // Không thay đổi opacity vì chúng ta muốn nội dung luôn hiển thị
+                        });
+
+                        // Thêm hiệu ứng nhẹ nhàng cho các phần tử bên trong, không ảnh hưởng đến hiển thị
+                        batch.forEach((card) => {
+                            animateCardElementsSubtle(card);
+                        });
+                    },
+                });
+            }
+
+            /**
+             * Animate elements inside a service card - Phiên bản nhẹ nhàng hơn
+             * Sử dụng .from thay vì .to để đảm bảo nội dung luôn hiển thị
+             */
+            function animateCardElementsSubtle(card) {
+                // Create timeline for card elements
+                const cardTl = gsap.timeline();
+
+                // Select elements inside the card
+                const icon = card.querySelector("[data-icon]");
+                const title = card.querySelector("[data-title]");
+                const listItems = card.querySelectorAll("ul li");
+                const button = card.querySelector(".btn");
+
+                // Animate card elements with subtle effects
+                cardTl
+                    .from(icon, {
+                        y: 10,
+                        scale: 0.9,
+                        duration: 0.6,
+                        ease: "back.out(1.7)",
+                    })
+                    .from(
+                        title,
+                        {
+                            y: 10,
+                            duration: 0.5,
+                            ease: "power3.out",
+                        },
+                        "-=0.3"
+                    )
+                    .from(
+                        listItems,
+                        {
+                            x: 10,
+                            stagger: 0.08,
+                            duration: 0.5,
+                            ease: "power3.out",
+                        },
+                        "-=0.2"
+                    )
+                    .from(
+                        button,
+                        {
+                            y: 10,
+                            duration: 0.5,
+                            ease: "power3.out",
+                        },
+                        "-=0.3"
+                    );
+            }
+
+            /**
+             * Initialize background decorative shapes
+             */
+            function initBackgroundShapes() {
+                // Add shapes to the DOM
+                const servicesSection =
+                    document.querySelector(".services-section");
+
+                // Create and append shapes
+                const shapes = [
+                    { class: "bg-shape shape-1" },
+                    { class: "bg-shape shape-2" },
+                    { class: "bg-shape shape-3" },
+                ];
+
+                shapes.forEach((shape) => {
+                    const element = document.createElement("div");
+                    element.className = shape.class;
+                    servicesSection.appendChild(element);
+                });
+
+                // Animate shapes
+                gsap.from(".bg-shape", {
+                    scale: 0.5,
+                    opacity: 0,
+                    duration: 1,
+                    stagger: 0.2,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: ".services-section",
+                        start: "top bottom-=100",
+                    },
+                });
+
+                // Add continuous floating animation
+                gsap.to(".shape-1", {
+                    y: -30,
+                    x: 15,
+                    duration: 4,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut",
+                });
+
+                gsap.to(".shape-2", {
+                    y: 30,
+                    x: -15,
+                    duration: 5,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut",
+                });
+
+                gsap.to(".shape-3", {
+                    y: -20,
+                    x: 10,
+                    rotation: 15,
+                    duration: 6,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut",
+                });
+            }
+
+            /**
+             * Initialize hover effects
+             */
+            function initHoverEffects() {
+                // Add hover effect for buttons with data-hover="slide"
+                const hoverButtons = document.querySelectorAll(
+                    '[data-hover="slide"]'
+                );
+
+                hoverButtons.forEach((button) => {
+                    button.addEventListener("mouseenter", () => {
+                        gsap.to(button.querySelector("i"), {
+                            x: 5,
+                            duration: 0.3,
+                            ease: "power2.out",
+                        });
+                    });
+
+                    button.addEventListener("mouseleave", () => {
+                        gsap.to(button.querySelector("i"), {
+                            x: 0,
+                            duration: 0.3,
+                            ease: "power2.out",
+                        });
+                    });
+                });
+            }
+
+            /**
+             * Scroll trigger observer for elements
+             */
+            function createScrollObserver() {
+                // Fallback for browsers that don't support Intersection Observer
+                if (!("IntersectionObserver" in window)) {
+                    document.querySelectorAll(".fade-up").forEach((el) => {
+                        el.classList.add("is-visible");
+                    });
+                    return;
+                }
+
+                // Create observer for fade-up elements
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add("is-visible");
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    },
+                    {
+                        threshold: 0.1,
+                        rootMargin: "0px 0px -50px 0px",
+                    }
+                );
+
+                // Observe all elements with fade-up class
+                document.querySelectorAll(".fade-up").forEach((el) => {
+                    observer.observe(el);
+                });
+            }
+        </script>
     </body>
 </html>
