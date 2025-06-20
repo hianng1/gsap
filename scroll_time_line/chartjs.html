@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Timeline với Chart.js</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f8f9fa;
+            }
+            
+            .header-section {
+                text-align: center;
+                margin-top: 3rem;
+                color: #0d6efd;
+            }
+            
+            .section-divider {
+                height: 4px;
+                width: 80px;
+                background-color: #0d6efd;
+                margin: 1rem auto 2rem;
+                border-radius: 2px;
+            }
+            
+            .timeline-wrapper {
+                padding: 3rem 0;
+            }
+            
+            .timeline-item {
+                position: relative;
+                margin-bottom: 5rem;
+                padding: 2rem;
+                background: white;
+                border-radius: 10px;
+                box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            }
+            
+            .year {
+                display: inline-block;
+                background: #0d6efd;
+                color: white;
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-weight: bold;
+                position: relative;
+            }
+            
+            .timeline-content {
+                margin-top: 1.5rem;
+            }
+            
+            .timeline-image {
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            
+            .timeline-image img {
+                width: 100%;
+                height: auto;
+                transition: transform 0.5s ease;
+            }
+            
+            .timeline-image:hover img {
+                transform: scale(1.05);
+            }
+            
+            .chart-container {
+                position: relative;
+                height: 250px;
+                width: 100%;
+                margin: 1.5rem 0;
+            }
+            
+            .metrics-title {
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: #0d6efd;
+                margin-bottom: 1rem;
+                text-align: center;
+            }
+            
+            .vertical-line {
+                position: absolute;
+                left: 50%;
+                top: 0;
+                bottom: 0;
+                width: 4px;
+                background-color: #e9ecef;
+                transform: translateX(-50%);
+                z-index: -1;
+            }
+            
+            .timeline-dot {
+                width: 20px;
+                height: 20px;
+                background-color: #0d6efd;
+                border-radius: 50%;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="vertical-line"></div>
+        
+        <div class="container">
+            <h1 class="header-section">
+                Hành trình Phát triển với Dữ liệu Trực quan
+            </h1>
+            <div class="section-divider"></div>
+            <p class="text-center mb-5">Từ Khởi nghiệp đến Đối tác Toàn diện</p>
+        </div>
+
+        <div class="timeline-wrapper">
+            <div class="container">
+                <div class="timeline-dot" style="top: 200px;"></div>
+                
+                <div class="timeline-item" data-year="2018">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="year mb-3">2018</div>
+                            <h3 class="h4 mb-3">
+                                Khởi nghiệp & Đặt nền móng vững chắc
+                            </h3>
+                            <div class="timeline-content">
+                                <p class="text-muted">
+                                    VietProteam ra đời, đặt nền móng vững chắc
+                                    với đội ngũ chuyên gia lập trình và
+                                    marketing giàu kinh nghiệm.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="metrics-title">Tăng trưởng dự án</div>
+                            <div class="chart-container">
+                                <canvas id="projectsChart2018"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="timeline-image">
+                                <img
+                                    src="images/khoi_nghiep.jpeg"
+                                    alt="2018 - Khởi nghiệp"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-dot" style="top: 500px;"></div>
+                
+                <div class="timeline-item" data-year="2019">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="year mb-3">2019</div>
+                            <h3 class="h4 mb-3">
+                                Mở rộng dịch vụ & Nâng cao chuyên môn
+                            </h3>
+                            <div class="timeline-content">
+                                <p class="text-muted">
+                                    Mở rộng các gói dịch vụ và nâng cao năng lực
+                                    chuyên môn. Bắt đầu cung cấp các giải pháp
+                                    phức tạp.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="metrics-title">Doanh thu theo dịch vụ</div>
+                            <div class="chart-container">
+                                <canvas id="revenueChart2019"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="timeline-image">
+                                <img
+                                    src="images/mo_rong_dich_vu.webp"
+                                    alt="2019 - Mở rộng dịch vụ"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-dot" style="top: 800px;"></div>
+                
+                <div class="timeline-item" data-year="2020">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="year mb-3">2020</div>
+                            <h3 class="h4 mb-3">
+                                Thích ứng & Vượt qua thách thức
+                            </h3>
+                            <div class="timeline-content">
+                                <p class="text-muted">
+                                    Chứng tỏ khả năng thích ứng nhanh chóng và
+                                    linh hoạt trong bối cảnh khó khăn.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="metrics-title">Tăng trưởng khách hàng</div>
+                            <div class="chart-container">
+                                <canvas id="clientsChart2020"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="timeline-image">
+                                <img
+                                    src="images/vuot_qua_thu_thach.webp"
+                                    alt="2020 - Vượt qua thách thức"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-dot" style="top: 1100px;"></div>
+                
+                <div class="timeline-item" data-year="2021">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="year mb-3">2021</div>
+                            <h3 class="h4 mb-3">
+                                Nâng cao chất lượng & Chuẩn bị cho kỷ nguyên số mới
+                            </h3>
+                            <div class="timeline-content">
+                                <p class="text-muted">
+                                    Tập trung nâng cao chất lượng dịch vụ và sản
+                                    phẩm. Đầu tư mạnh vào nghiên cứu và ứng dụng
+                                    các công nghệ mới nổi.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="metrics-title">Phân bổ đầu tư công nghệ</div>
+                            <div class="chart-container">
+                                <canvas id="investmentChart2021"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="timeline-image">
+                                <img
+                                    src="images/nang_cao_chat_luong.jpeg"
+                                    alt="2021 - Nâng cao chất lượng"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Script Libraries -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+        
+        <script>
+            // Đăng ký GSAP plugins
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Cấu hình chung cho các biểu đồ
+            Chart.defaults.font.family = "'Segoe UI', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif";
+            Chart.defaults.font.size = 14;
+            Chart.defaults.color = '#666';
+            
+            // Khởi tạo các biểu đồ
+            function initCharts() {
+                // Biểu đồ số lượng dự án 2018
+                const projectsChart2018 = new Chart(
+                    document.getElementById('projectsChart2018'),
+                    {
+                        type: 'line',
+                        data: {
+                            labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
+                            datasets: [{
+                                label: 'Số lượng dự án',
+                                data: [2, 3, 3, 5, 7, 8, 10, 12, 15, 18, 20, 25],
+                                borderColor: '#0d6efd',
+                                backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                                tension: 0.3,
+                                fill: true
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    }
+                );
+                
+                // Biểu đồ doanh thu theo dịch vụ 2019
+                const revenueChart2019 = new Chart(
+                    document.getElementById('revenueChart2019'),
+                    {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Web Dev', 'Mobile App', 'Marketing', 'Tư vấn'],
+                            datasets: [{
+                                data: [40, 25, 20, 15],
+                                backgroundColor: [
+                                    '#0d6efd',
+                                    '#6610f2',
+                                    '#6f42c1',
+                                    '#d63384'
+                                ],
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }
+                        }
+                    }
+                );
+                
+                // Biểu đồ khách hàng 2020
+                const clientsChart2020 = new Chart(
+                    document.getElementById('clientsChart2020'),
+                    {
+                        type: 'bar',
+                        data: {
+                            labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                            datasets: [{
+                                label: 'Khách hàng mới',
+                                data: [15, 12, 28, 35],
+                                backgroundColor: '#0d6efd'
+                            }, {
+                                label: 'Khách hàng tiếp tục',
+                                data: [20, 25, 30, 40],
+                                backgroundColor: '#198754'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                x: {
+                                    stacked: true,
+                                },
+                                y: {
+                                    stacked: true,
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    }
+                );
+                
+                // Biểu đồ phân bổ đầu tư 2021
+                const investmentChart2021 = new Chart(
+                    document.getElementById('investmentChart2021'),
+                    {
+                        type: 'polarArea',
+                        data: {
+                            labels: ['AI/ML', 'UX/UI', 'Cloud', 'IoT', 'Đào tạo'],
+                            datasets: [{
+                                data: [25, 20, 15, 20, 20],
+                                backgroundColor: [
+                                    '#0d6efd',
+                                    '#6f42c1',
+                                    '#20c997',
+                                    '#fd7e14',
+                                    '#ffc107'
+                                ]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }
+                        }
+                    }
+                );
+            }
+            
+            // GSAP animations
+            function initAnimations() {
+                // Animate timeline items on scroll
+                const timelineItems = document.querySelectorAll('.timeline-item');
+                
+                timelineItems.forEach((item, index) => {
+                    // Animate the whole item
+                    gsap.from(item, {
+                        opacity: 0,
+                        y: 50,
+                        duration: 0.8,
+                        scrollTrigger: {
+                            trigger: item,
+                            start: "top 75%",
+                            toggleActions: "play none none reverse"
+                        }
+                    });
+                    
+                    // Reveal chart with a nice effect when scrolled into view
+                    const chartCanvas = item.querySelector('canvas');
+                    gsap.from(chartCanvas, {
+                        opacity: 0,
+                        scale: 0.7,
+                        duration: 1,
+                        delay: 0.3,
+                        ease: "back.out(1.7)",
+                        scrollTrigger: {
+                            trigger: chartCanvas,
+                            start: "top 80%",
+                            toggleActions: "play none none reverse"
+                        }
+                    });
+                });
+                
+                // Animate vertical line
+                gsap.from('.vertical-line', {
+                    height: 0,
+                    duration: 1.5,
+                    ease: "power1.inOut"
+                });
+                
+                // Animate timeline dots
+                gsap.from('.timeline-dot', {
+                    scale: 0,
+                    opacity: 0,
+                    duration: 0.5,
+                    stagger: 0.2,
+                    delay: 0.5
+                });
+            }
+            
+            // Khởi tạo khi trang tải xong
+            document.addEventListener('DOMContentLoaded', () => {
+                initCharts();
+                initAnimations();
+            });
+        </script>
+    </body>
+</html>
